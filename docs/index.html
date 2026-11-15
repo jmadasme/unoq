@@ -156,6 +156,39 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
 .rich .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
 .rich .card-grid .card{margin:0}
 
+
+.rich h3{margin:26px 0 8px}
+.rich p{margin:0 0 14px;color:var(--muted);line-height:1.7}
+.fail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:6px}
+.fail{background:rgba(11,34,43,.55);border:1px solid var(--line);border-radius:14px;padding:18px}
+.fail .v{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--warm,#D6A86A)}
+.fail h3{font-size:16px;margin:8px 0 6px}
+.fail p{font-size:14px;margin:0;color:var(--muted)}
+.rating-head{display:flex;align-items:center;gap:20px;margin:6px 0 18px;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:rgba(11,34,43,.55)}
+.rating-avg{font-family:var(--mono);font-size:40px;line-height:1;color:var(--accent)}
+.rating-avg small{font-size:14px;color:var(--muted)}
+.rating-head p{margin:4px 0 0;font-size:14px;color:var(--muted);max-width:70ch}
+.rating{display:grid;gap:2px}
+.rating-row{display:grid;grid-template-columns:165px minmax(90px,1fr) 48px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.rating-row:last-child{border-bottom:0}
+.rating-name{font-size:13.5px;font-weight:600}
+.rating-bar{height:6px;border-radius:99px;background:rgba(148,190,200,.14);overflow:hidden}
+.rating-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.rating-score{font-family:var(--mono);font-size:12.5px;color:var(--accent);text-align:right}
+.rating-note{grid-column:2/-1;font-size:12.5px;color:var(--muted);margin-top:-4px}
+.faq{display:grid;gap:0;margin-top:4px}
+.faq details{border-bottom:1px solid var(--line);padding:14px 0}
+.faq summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";display:inline-block;width:18px;color:var(--accent);font-family:var(--mono)}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:10px 0 0 18px;font-size:14px;color:var(--muted)}
+@media(max-width:720px){
+  .fail-grid{grid-template-columns:1fr}
+  .rating-head{flex-direction:column;align-items:flex-start}
+  .rating-row{grid-template-columns:120px 1fr 44px}
+}
+
 </style>
 <link rel="stylesheet" href="assets/community.css?v=1">
 </head>
@@ -188,15 +221,7 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
 
 <section class="stats"><div class="wrap stats-grid"><div class="stat"><div class="stat-num">2</div><div class="stat-label">ejemplos</div></div><div class="stat"><div class="stat-num">2</div><div class="stat-label">mundos</div></div><div class="stat"><div class="stat-num">1</div><div class="stat-label">adb</div></div><div class="stat"><div class="stat-num">0</div><div class="stat-label">nube</div></div></div></section>
 
-<section class="section" id="proyecto"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">01 — El proyecto</div><h2>Qué resuelve</h2><p class="section-sub">Dos ejemplos progresivos para entender la UNO Q: el blink clásico y un control GPIO desde la parte Linux hacia el microcontroller. Documenta la separación MPU/MCU y el camino de carga con adb.</p></div>
-  <div class="two">
-    <div class="card reveal"><span class="tag">Problema</span><h3>El punto de partida</h3><p>La UNO Q no es una placa Arduino común: tiene Linux y un MCU separado, y confundir dónde corre cada cosa hace fallar el primer programa.</p></div>
-    <div class="card reveal"><span class="tag">Solución</span><h3>La propuesta</h3><p>Dos ejemplos mínimos que muestran el límite: un blink en el MCU y un control GPIO desde la app Linux.</p></div>
-  </div>
-</div></section>
-
-<section class="section" id="versiones"><div class="wrap">
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">El concepto</div><h2>Qué es y por qué existe</h2></div><div class="rich reveal"><p>UNO Q Primeros Pasos reúne dos ejemplos progresivos para entender la Arduino UNO Q: el blink clásico y un servidor de comandos GPIO que corre en la parte Linux y controla el microcontrolador. El segundo acepta por serie comandos READ, WRITE, ANALOG, PWM, MATRIX y TEMP, y documenta pines, ADC de 12 bits, PWM y la matriz de LEDs de 12×8.</p><p>Está destinado a quien llega de una placa Arduino tradicional y necesita ubicar dónde corre cada cosa. Explica la separación entre el MPU QRB2210 con Debian y el MCU STM32U585 con Zephyr, el puente RPC en el puerto 7500 y la carga por ADB, OpenOCD y SWD. Las pruebas son manuales y están registradas; no hay suite automatizada, y los límites de tensión y corriente están declarados.</p></div></div></section><section class="section" id="versiones"><div class="wrap">
   <div class="section-head reveal"><div class="kicker">02 — Versiones</div><h2>La historia, completa.</h2><p class="section-sub">Cada carpeta conserva una etapa del proyecto. No se borraron las anteriores: se pusieron en contexto.</p></div>
   <div class="versions"><article class="version reveal">
   <div class="version-top"><h3>UnoQ</h3><span class="count">24 archivos</span></div>
@@ -204,24 +229,24 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
   <a href="https://github.com/jmadasme/unoq/tree/main/versions/UnoQ" target="_blank" rel="noopener">Ver carpeta <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </article></div>
 </div></section>
-<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">01 — La idea</div><h2>La UNO Q no es un Uno más rápido</h2><p class="section-sub">El header pertenece al MCU, el Linux corre en otro SoC y `digitalWrite()` no existe del lado Python. Sin ese mapa mental, cada pin parece roto. Este repositorio es el mapa.</p></div><div class="rich reveal"><div class="card-grid">
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">03 — La idea</div><h2>La UNO Q no es un Uno más rápido</h2><p class="section-sub">El header pertenece al MCU, el Linux corre en otro SoC y `digitalWrite()` no existe del lado Python. Sin ese mapa mental, cada pin parece roto. Este repositorio es el mapa.</p></div><div class="rich reveal"><div class="card-grid">
 <div class="card"><h3>Dos procesadores, una placa</h3><div><div></div><p>La documentación oficial cuenta qué es la UNO Q, pero no siempre explica dónde vive cada pin. D13 no tiene LED, el ADC es de 12 bits y el sketch no ve el Linux. Confundir los cerebros cuesta horas.</p></div></div>
 <div class="card"><h3>Un laboratorio desde la placa</h3><div><div></div><p>Dos ejemplos que separan responsabilidades: blink para entender el MCU y gpio_control para construir el puente entre Python y el mundo físico, con pinout, protocolo y límites eléctricos.</p></div></div>
 </div></div></div></section>
-<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">02 — El recorrido</div><h2>Cómo funciona, paso a paso</h2><p class="section-sub">De encender un LED a exponer GPIO, ADC, PWM y temperatura con un protocolo propio.</p></div><div class="rich reveal"><div class="timeline">
+<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">04 — El recorrido</div><h2>Cómo funciona, paso a paso</h2><p class="section-sub">De encender un LED a exponer GPIO, ADC, PWM y temperatura con un protocolo propio.</p></div><div class="rich reveal"><div class="timeline">
 <div class="step"><div class="step-n">01</div><h4>Blink honesto</h4><div><p>D13 no tiene LED onboard. El ejemplo lo documenta y muestra cómo verificar con un LED externo o con la matriz de la placa.</p></div></div>
 <div class="step"><div class="step-n">02</div><h4>Protocolo de comandos</h4><div><p>El sketch expone GPIO, ADC de 12 bits, PWM, matriz 12×8 y temperatura interna por Serial USB CDC.</p></div></div>
 <div class="step"><div class="step-n">03</div><h4>Clientes Python</h4><div><p>Dos clientes: uno interactivo para el header y otro remoto vía ADB para los LEDs que administra Linux.</p></div></div>
 <div class="step"><div class="step-n">04</div><h4>Verificación</h4><div><p>Comandos de lectura y escritura, formato del puerto, `adb devices` y diagnóstico cuando el upload no engancha.</p></div></div>
 <div class="step"><div class="step-n">05</div><h4>Migración a Bridge</h4><div><p>El README explica la arquitectura nativa arduino-router y qué cambiaría para usarla en una versión futura.</p></div></div>
 </div></div></div></section>
-<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">03 — Bajo el capó</div><h2>El viaje de un comando hasta el pin</h2><p class="section-sub">Python no escribe el pin: se lo pide al MCU. Entender ese viaje —y sus límites— es la diferencia entre adivinar y diseñar.</p></div><div class="rich reveal"><figure><img src="assets/rich/gpio-flow.svg" alt="Flujo de un comando GPIO desde Python hasta el pin del MCU" loading="lazy"><figcaption>docs/assets/gpio-flow.svg · del cliente Python al pin físico</figcaption></figure>
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">05 — Bajo el capó</div><h2>El viaje de un comando hasta el pin</h2><p class="section-sub">Python no escribe el pin: se lo pide al MCU. Entender ese viaje —y sus límites— es la diferencia entre adivinar y diseñar.</p></div><div class="rich reveal"><figure><img src="assets/rich/gpio-flow.svg" alt="Flujo de un comando GPIO desde Python hasta el pin del MCU" loading="lazy"><figcaption>docs/assets/gpio-flow.svg · del cliente Python al pin físico</figcaption></figure>
 <div class="card-grid">
 <div class="card"><h3>El header es del MCU</h3><div><p>D0–D13 y A0–A5 se controlan desde el sketch; el Linux no los toca directamente.</p></div></div>
 <div class="card"><h3>Serial USB CDC</h3><div><p>El protocolo ASCII viaja por /dev/ttyACM0 a 115200 baudios, con respuestas OK/ERR.</p></div></div>
 <div class="card"><h3>Los LEDs onboard son del Linux</h3><div><p>green:user, blue:user y red:user se manejan por sysfs desde el MPU.</p></div></div>
 </div></div></div></section>
-<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">04 — Lo que lo hace distinto</div><h2>Decisiones de ingeniería</h2><p class="section-sub">Cada hallazgo está en el README: lo que funcionó, lo que se rompió y por qué.</p></div><div class="rich reveal"><div class="features">
+<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">06 — Lo que lo hace distinto</div><h2>Decisiones de ingeniería</h2><p class="section-sub">Cada hallazgo está en el README: lo que funcionó, lo que se rompió y por qué.</p></div><div class="rich reveal"><div class="features">
 <div class="feature"><h3>GPIO, ADC y PWM</h3><div><p>Escritura digital, lectura analógica de 12 bits y PWM de 0 a 255 sobre los pines del header.</p></div></div>
 <div class="feature"><h3>Matriz LED 12×8</h3><div><p>Control de la matriz onboard desde el sketch, con fuente 3×4 para dibujar caracteres.</p></div></div>
 <div class="feature"><h3>Temperatura interna</h3><div><p>Lectura del sensor del MCU como ejemplo de telemetría propia de la placa.</p></div></div>
@@ -229,7 +254,7 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
 <div class="feature"><h3>Pinout completo</h3><div><p>Tabla de 20 pines con modo inicial, ADC, PWM y advertencias de uso.</p></div></div>
 <div class="feature"><h3>Límites eléctricos</h3><div><p>3,3 V, ≤20 mA por pin y ≤100 mA en total. Un GPIO no alimenta un motor.</p></div></div>
 </div></div></div></section>
-<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">05 — Stack y arranque</div><h2>Con qué está construido</h2><p class="section-sub">Firmware para el STM32U585, Python para el MPU y las herramientas oficiales de Arduino.</p></div><div class="rich reveal"><p><p>El sketch se compila con el core Zephyr y se carga por ADB + OpenOCD, sin bootloader. El cliente Python usa la biblioteca estándar y pyserial.</p></p>
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">07 — Stack y arranque</div><h2>Con qué está construido</h2><p class="section-sub">Firmware para el STM32U585, Python para el MPU y las herramientas oficiales de Arduino.</p></div><div class="rich reveal"><p><p>El sketch se compila con el core Zephyr y se carga por ADB + OpenOCD, sin bootloader. El cliente Python usa la biblioteca estándar y pyserial.</p></p>
 <p>Arduino UNO Q STM32U585 Zephyr RTOS Qualcomm QRB2210 Debian Python 3 pyserial ADB OpenOCD arduino-cli Arduino App Lab</p>
 <div class="note"><div><span>La placa es de 3,3 V. No conectes 5 V a un GPIO ni al ADC; para cargas inductivas usá transistor o driver con alimentación propia.</span></div></div>
 <p>compilar y cargar el sketch</p>
@@ -238,12 +263,11 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
 <span>$</span> arduino-cli compile --fqbn arduino:zephyr:unoq .
 <span>$</span> arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:zephyr:unoq .
 <span>$</span> arduino-cli monitor -p /dev/ttyACM0 --config baudrate=115200</pre></div></div></section>
-<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">06 — Documentación</div><h2>Todo está escrito</h2><p class="section-sub">Cada decisión, cada límite y cada comando están documentados en el repositorio. Sin folletos: lo que funciona se muestra, lo que no, también.</p></div><div class="rich reveal"><div class="card-grid">
+<section class="section"><div class="wrap"><div class="section-head reveal"><div class="kicker">08 — Documentación</div><h2>Todo está escrito</h2><p class="section-sub">Cada decisión, cada límite y cada comando están documentados en el repositorio. Sin folletos: lo que funciona se muestra, lo que no, también.</p></div><div class="rich reveal"><div class="card-grid">
 <a class="card" href=""><h3>Datasheet</h3><p>Guía de usuario de ambos ejemplos: hardware, cableado, protocolo, calibración y troubleshooting.</p></a>
 <a class="card" href=""><h3>Guía de desarrollador</h3><p>Arquitectura del sketch, parser de comandos, matriz LED, clientes Python y deuda técnica real.</p></a>
 <a class="card" href=""><h3>Referencias</h3><p>Arduino UNO Q, App Lab, arduino-router, Zephyr, STM32U585, QRB2210 y ADB.</p></a>
-</div></div></div></section>
-<section class="cta"><div class="wrap"><div class="cta-box reveal">
+</div></div></div></section><section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">Lo que no funcionó</div><h2>Los tropiezos, documentados</h2><p class="section-sub">Las primeras versiones existen para que estos errores no se repitan: cada una dejó una decisión de diseño verificable.</p></div><div class="fail-grid reveal"><div class="fail"><div class="v">UnoQ</div><h3>El blink no se puede ver</h3><p>La placa no tiene LED en D13, así que el ejemplo blink no se verifica a ojo como en un Arduino clásico. Los LED reales pertenecen al Linux y se controlan por sysfs: green:user, red:user, blue:user, green:wlan, red:panic y blue:bt. El ejemplo se conserva por continuidad didáctica, no como prueba visual.</p></div><div class="fail"><div class="v">UnoQ</div><h3>El puerto serie cambiaba de nombre</h3><p>El kernel a veces asigna ttyACM1 en lugar de ttyACM0 y los scripts fallaban con no se pudo abrir el puerto. Se agregó una función de detección que busca el dispositivo disponible antes de conectar. El problema está documentado y resuelto en los clientes.</p></div><div class="fail"><div class="v">UnoQ</div><h3>analogRead no cubre el sensor interno</h3><p>analogRead solo alcanza los pines externos. Para leer el sensor de temperatura interno hubo que usar la API de Zephyr y las direcciones 0x0BFA0710 y 0x0BFA0742. Además, el ADC es de 12 bits y exige dividir por 4095. La función TEMP queda marcada como experimental.</p></div><div class="fail"><div class="v">UnoQ</div><h3>Validación laxa del protocolo</h3><p>La primera versión aceptaba parsearPin("A") y lo interpretaba como A0 en lugar de rechazarlo; leerLinea esperaba en busy-wait sin timeout; MATRIX distinguía mayúsculas. Se corrigieron las tres incidencias: error explícito para pin inválido, timeout de un segundo y comparación sin distinción de mayúsculas.</p></div></div></div></section><section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">Ficha de evaluación</div><h2>Cómo se mide este proyecto</h2><p class="section-sub">Seis criterios con la misma escala en todo el catálogo, para comparar sin marketing.</p></div><div class="rating-head reveal"><div class="rating-avg">3.3<small>/5</small></div><div><strong>Madurez global</strong><p>Material introductorio claro para la UNO Q, con pruebas manuales y límites explícitos. Sirve para entender MPU y MCU; no es una base de producción.</p></div></div><div class="rating reveal"><div class="rating-row"><div class="rating-name">Madurez</div><div class="rating-bar"><i style="width:40%"></i></div><div class="rating-score">2/5</div><div class="rating-note">Dos ejemplos funcionales con pruebas manuales registradas; no hay pruebas automatizadas ni CI.</div></div><div class="rating-row"><div class="rating-name">Reproducibilidad</div><div class="rating-bar"><i style="width:60%"></i></div><div class="rating-score">3/5</div><div class="rating-note">Requiere UNO Q, ADB y toolchain Zephyr; el puerto serie puede cambiar y los scripts lo detectan.</div></div><div class="rating-row"><div class="rating-name">Documentación</div><div class="rating-bar"><i style="width:80%"></i></div><div class="rating-score">4/5</div><div class="rating-note">README, datasheet y guía de desarrollador explican MPU, MCU, RPC Bridge y carga por ADB.</div></div><div class="rating-row"><div class="rating-name">Honestidad de límites</div><div class="rating-bar"><i style="width:100%"></i></div><div class="rating-score">5/5</div><div class="rating-note">Declara límites de 3,3 V y 20 mA, ausencia de autenticación y que TEMP es experimental.</div></div><div class="rating-row"><div class="rating-name">Valor demostrativo</div><div class="rating-bar"><i style="width:80%"></i></div><div class="rating-score">4/5</div><div class="rating-note">Es el punto de entrada que explica la arquitectura híbrida, con comandos probados y consumo de flash y RAM.</div></div><div class="rating-row"><div class="rating-name">Facilidad de despliegue</div><div class="rating-bar"><i style="width:40%"></i></div><div class="rating-score">2/5</div><div class="rating-note">La carga depende de ADB y OpenOCD; no hay bootloader ni un flujo de un solo comando.</div></div></div></div></section><section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">Preguntas típicas</div><h2>Lo que suelen preguntar</h2></div><div class="faq reveal"><details><summary>¿Es un Arduino normal?</summary><p>No. Tiene un MPU Linux y un MCU separado; el código corre en lados distintos.</p></details><details><summary>¿Por dónde empiezo?</summary><p>Por el blink y después por unoq_gpio_control.</p></details><details><summary>¿Necesito App Lab?</summary><p>Es el camino recomendado, aunque también se puede trabajar por adb.</p></details><details><summary>¿Puedo usar el IDE clásico?</summary><p>Para el MCU sí, con el core correspondiente; la parte Linux es otro flujo.</p></details><details><summary>¿Los ejemplos funcionan sin hardware?</summary><p>Se pueden leer, pero no ejecutar el GPIO.</p></details></div></div></section><section class="cta"><div class="wrap"><div class="cta-box reveal">
   <div class="kicker">Siguiente paso</div><h2>¿Te animás?</h2>
   <p>Usá esta familia como base para uno q primeros pasos. Está documentada para que puedas entenderla, ejecutarla y continuarla sin adivinar.</p>
   <div class="hero-actions" style="justify-content:center"><a class="btn btn-primary" href="https://github.com/jmadasme/unoq" target="_blank" rel="noopener">Abrir el repositorio <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost" href="/arduino-unoq/">Ver más de Arduino</a></div>

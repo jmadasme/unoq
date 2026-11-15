@@ -12,8 +12,6 @@ Cada carpeta conserva el contenido original de su etapa, sin `.git`, dependencia
 instaladas ni binarios pesados. La documentación de operación y de código está en
 [`docs/`](docs/), y el sitio del proyecto en [`docs/index.html`](docs/index.html).
 
-> **Nota de preservación:** se removieron credenciales, claves o tokens detectados en 1 archivo(s) de esta familia. Los ejemplos y plantillas seguras se conservan.
-
 ## Índice de versiones
 
 | Versión | Qué aporta | Archivos |
@@ -35,6 +33,64 @@ ls
 
 Requiere una UNO Q con sistema actualizado y adb configurado. Los ejemplos no cubren todos los pines.
 
+<!-- ficha -->
+## Ficha de evaluación
+
+**Madurez global: 3.3/5**
+
+| Criterio | Nota | Evidencia |
+|---|---:|---|
+| Madurez | 2/5 | Dos ejemplos funcionales con pruebas manuales registradas; no hay pruebas automatizadas ni CI. |
+| Reproducibilidad | 3/5 | Requiere UNO Q, ADB y toolchain Zephyr; el puerto serie puede cambiar y los scripts lo detectan. |
+| Documentación | 4/5 | README, datasheet y guía de desarrollador explican MPU, MCU, RPC Bridge y carga por ADB. |
+| Honestidad de límites | 5/5 | Declara límites de 3,3 V y 20 mA, ausencia de autenticación y que TEMP es experimental. |
+| Valor demostrativo | 4/5 | Es el punto de entrada que explica la arquitectura híbrida, con comandos probados y consumo de flash y RAM. |
+| Facilidad de despliegue | 2/5 | La carga depende de ADB y OpenOCD; no hay bootloader ni un flujo de un solo comando. |
+
+Material introductorio claro para la UNO Q, con pruebas manuales y límites explícitos. Sirve para entender MPU y MCU; no es una base de producción.
+
+## Lo que no funcionó
+
+### UnoQ — El blink no se puede ver
+
+La placa no tiene LED en D13, así que el ejemplo blink no se verifica a ojo como en un Arduino clásico. Los LED reales pertenecen al Linux y se controlan por sysfs: green:user, red:user, blue:user, green:wlan, red:panic y blue:bt. El ejemplo se conserva por continuidad didáctica, no como prueba visual.
+
+### UnoQ — El puerto serie cambiaba de nombre
+
+El kernel a veces asigna ttyACM1 en lugar de ttyACM0 y los scripts fallaban con no se pudo abrir el puerto. Se agregó una función de detección que busca el dispositivo disponible antes de conectar. El problema está documentado y resuelto en los clientes.
+
+### UnoQ — analogRead no cubre el sensor interno
+
+analogRead solo alcanza los pines externos. Para leer el sensor de temperatura interno hubo que usar la API de Zephyr y las direcciones 0x0BFA0710 y 0x0BFA0742. Además, el ADC es de 12 bits y exige dividir por 4095. La función TEMP queda marcada como experimental.
+
+### UnoQ — Validación laxa del protocolo
+
+La primera versión aceptaba parsearPin("A") y lo interpretaba como A0 en lugar de rechazarlo; leerLinea esperaba en busy-wait sin timeout; MATRIX distinguía mayúsculas. Se corrigieron las tres incidencias: error explícito para pin inválido, timeout de un segundo y comparación sin distinción de mayúsculas.
+
+## Preguntas típicas
+
+**¿Es un Arduino normal?**
+
+No. Tiene un MPU Linux y un MCU separado; el código corre en lados distintos.
+
+**¿Por dónde empiezo?**
+
+Por el blink y después por unoq_gpio_control.
+
+**¿Necesito App Lab?**
+
+Es el camino recomendado, aunque también se puede trabajar por adb.
+
+**¿Puedo usar el IDE clásico?**
+
+Para el MCU sí, con el core correspondiente; la parte Linux es otro flujo.
+
+**¿Los ejemplos funcionan sin hardware?**
+
+Se pueden leer, pero no ejecutar el GPIO.
+
+<!-- /ficha -->
+
 ## Documentación
 
 - [`docs/datasheet.md`](docs/datasheet.md) — instalación, operación y límites.
@@ -42,11 +98,11 @@ Requiere una UNO Q con sistema actualizado y adb configurado. Los ejemplos no cu
 - [`docs/REFERENCES.md`](docs/REFERENCES.md) — estándares, librerías y fuentes.
 - [`docs/index.html`](docs/index.html) — página del proyecto (GitHub Pages).
 
-## Alcance y honestidad
+## El proyecto en detalle
 
 <div align="center">
 
-## UNO Q Lab
+### UNO Q Lab
 
 **Dos ejemplos progresivos para entender cómo piensa una Arduino UNO Q: dos cerebros, un solo pin.**
 
